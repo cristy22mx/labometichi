@@ -4,13 +4,18 @@
     <title>Prueba</title>
     <script src="js/jquery-3.2.1.js"></script>
     <script src="js/data.js"></script>
+    <style>
+    .ficha.estudiante {
+      background-color: gray;
+    }
+    .ficha.estudiante.activo {
+      background-color: yellow;
+    }
+    </style>
   </head>
   <body>
     <div id="app">
-      <div class="ficha">
-        <h2 class="nombre">Collette Tubby</h2>
-        <img src="http://dummyimage.com/203x162.png/5fa2dd/ffffff">
-      </div>
+      <div class="totales"></div>
     </div>
     <script>
     // JavaScript vanilla
@@ -19,29 +24,59 @@
       var students = generation.students
 
       // jQuery empieza aquí
-
-      // $('#app').html(card)
-      $('#app').html('')
-      /*
-      for(var index = 0; index < students.length; index++) {
-        var student = students[index]
-        var card = '<div class="ficha">' +
-          '<h2 class="nombre">' + student.name + '</h2>' +
+      jQuery.each( students, function( index, student ) {
+        // creo tarjeta de datos de estudiante
+        var card = '<div id="student-arequipa-' + index + '" class="ficha estudiante">' +
+          '<h2 class="nombre">' + student.name +
+          '&nbsp;<span class="toggle">Cambiar</span></h2>' +
           '<img src="' + student.photo + '"/>' +
           '</div>'
-
-        $('#app').append(card)
-      }
-      */
-      $.each( students, function( index, student ) {
-        var card = '<div class="ficha">' +
-          '<h2 class="nombre">' + student.name + '</h2>' +
-          '<img src="' + student.photo + '"/>' +
-          '</div>'
-
-        $('#app').append(card)
+          console.log(card)
+        jQuery('#app').append(card)
       })
 
+      jQuery('.ficha.estudiante').each( function(index, card) {
+        // pongo clase activo a los estudiantes con ese estatus
+        if(students[index].active) {
+          jQuery(card).addClass('activo')
+        }
+      })
+
+      var reportaTotales = function() {
+        // cuento cuantas fichas tienen clase activo
+        var activos = jQuery('.ficha.estudiante').filter('.activo').length
+        // cuento cuantas fichas NO tienen esa clase
+        var inactivos = jQuery('.ficha.estudiante').not('.activo').length
+
+        var total = 'Activos: ' + activos + ' Inactivos: ' + inactivos
+        // escribo en el div.totales los totales
+        $('#app .totales').html(total)
+        // hago scroll
+        $(document).scrollTop(0)
+      }
+
+      reportaTotales()
+
+      $('.ficha.estudiante .toggle').on('click', function(event) {
+        // en cada click al boton en la ficha
+        var card = $(event.target).parent().parent()
+        // ubico mi elemento ficha "card"
+        card.toggleClass('activo')
+        // pongo/quito su clase activo
+
+        // leo su ID
+        var idCard = card.attr('id')
+        // leo solo el número de ID
+        var idStudent = parseInt(idCard.replace('student-arequipa-', ''))
+        // busco el estudiante en la base de datos
+        var statusStudent = data["AQP"]["2017-1"]["students"][idStudent]['active']
+        console.log('Antes de cambiar: ', idStudent, statusStudent)
+        // cambio el estatus en la base de datos
+        data["AQP"]["2017-1"]["students"][idStudent]['active'] = !statusStudent
+        console.log('Despues de cambiar: ', idStudent, !statusStudent)
+        // actualizo el conteo
+        reportaTotales()
+      })
     </script>
   </body>
 </html>
