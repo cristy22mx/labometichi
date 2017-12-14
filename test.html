@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Prueba</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="js/data.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="ficha">
+        <h2 class="nombre">Collette Tubby</h2>
+        <img src="http://dummyimage.com/203x162.png/5fa2dd/ffffff">
+      </div>
+    </div>
+    <script>
+      var sede = data.AQP
+      var generacion = sede["2017-1"]
+      var estudiantes = generacion.students
+      var estudiante = estudiantes[0]
+      var ficha = '<div class="ficha">' +
+        '<h2 class="nombre">' + estudiante.name + '</h2>' +
+        '<img src="' + estudiante.photo + '"/>' +
+        '</div>'
+      $('#app').html(ficha)
+    </script>
+  </body>
+</html>
