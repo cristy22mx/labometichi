@@ -17,28 +17,31 @@
       var sedeArequipa = data.AQP
       var generation = sedeArequipa["2017-1"]
       var students = generation.students
-      var student = students[0]
-      // jQuery empieza aquí
-      var card = '<div class="ficha">' +
-        '<h2 class="nombre">' + student.name + '</h2>' +
-        '<img src="' + student.photo + '"/>' +
-        '</div>'
-      $('#app').html(card)
 
-      // javascript vanilla DOM API sería así:
+      // jQuery empieza aquí
+
+      // $('#app').html(card)
+      $('#app').html('')
       /*
-      var app = document.getElementById('app')
-      var card = document.createElement('div')
-      card.className = 'ficha'
-      var name = document.createElement('h2')
-      name.className = 'nombre'
-      name.innerText = student.name
-      var img = document.createElement('img')
-      img.src = student.photo
-      card.appendChild(name)
-      card.appendChild(img)
-      app.appendChild(card)
+      for(var index = 0; index < students.length; index++) {
+        var student = students[index]
+        var card = '<div class="ficha">' +
+          '<h2 class="nombre">' + student.name + '</h2>' +
+          '<img src="' + student.photo + '"/>' +
+          '</div>'
+
+        $('#app').append(card)
+      }
       */
+      $.each( students, function( index, student ) {
+        var card = '<div class="ficha">' +
+          '<h2 class="nombre">' + student.name + '</h2>' +
+          '<img src="' + student.photo + '"/>' +
+          '</div>'
+
+        $('#app').append(card)
+      })
+
     </script>
   </body>
 </html>
