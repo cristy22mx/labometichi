@@ -13,15 +13,32 @@
       </div>
     </div>
     <script>
-      var sede = data.AQP
-      var generacion = sede["2017-1"]
-      var estudiantes = generacion.students
-      var estudiante = estudiantes[0]
-      var ficha = '<div class="ficha">' +
-        '<h2 class="nombre">' + estudiante.name + '</h2>' +
-        '<img src="' + estudiante.photo + '"/>' +
+    // JavaScript vanilla
+      var sedeArequipa = data.AQP
+      var generation = sedeArequipa["2017-1"]
+      var students = generation.students
+      var student = students[0]
+      // jQuery empieza aquí
+      var card = '<div class="ficha">' +
+        '<h2 class="nombre">' + student.name + '</h2>' +
+        '<img src="' + student.photo + '"/>' +
         '</div>'
-      $('#app').html(ficha)
+      $('#app').html(card)
+
+      // javascript vanilla DOM API sería así:
+      /*
+      var app = document.getElementById('app')
+      var card = document.createElement('div')
+      card.className = 'ficha'
+      var name = document.createElement('h2')
+      name.className = 'nombre'
+      name.innerText = student.name
+      var img = document.createElement('img')
+      img.src = student.photo
+      card.appendChild(name)
+      card.appendChild(img)
+      app.appendChild(card)
+      */
     </script>
   </body>
 </html>
