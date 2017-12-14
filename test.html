@@ -48,9 +48,21 @@
         // cuento cuantas fichas NO tienen esa clase
         var inactivos = jQuery('.ficha.estudiante').not('.activo').length
 
-        var total = 'Activos: ' + activos + ' Inactivos: ' + inactivos
+        var porcentajeActivos = (activos / students.length) * 100;
+        var porcentajeInactivos = (inactivos / students.length) * 100;
+        var porcentajeActivosNice = Math.round(porcentajeActivos * 100) / 100;
+        var porcentajeInactivosNice = Math.round(porcentajeInactivos * 100) / 100;
+
+        var estilo = ''
+        if(porcentajeActivosNice < 70) {
+          estilo = 'red'
+        } else {
+          estilo = 'green'
+        }
+        var total = 'Activos: ' + porcentajeActivosNice + '% ' +
+        ' Inactivos: ' + porcentajeInactivosNice + '%'
         // escribo en el div.totales los totales
-        $('#app .totales').html(total)
+        $('#app .totales').html(total).css( { "color": estilo } )
         // hago scroll
         $(document).scrollTop(0)
       }
