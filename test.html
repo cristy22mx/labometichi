@@ -69,10 +69,10 @@
         // leo solo el número de ID
         var idStudent = parseInt(idCard.replace('student-arequipa-', ''))
         // busco el estudiante en la base de datos
-        var statusStudent = data["AQP"]["2017-1"]["students"][idStudent]['active']
+        var statusStudent = students[idStudent]['active']
         console.log('Antes de cambiar: ', idStudent, statusStudent)
         // cambio el estatus en la base de datos
-        data["AQP"]["2017-1"]["students"][idStudent]['active'] = !statusStudent
+        students[idStudent]['active'] = !statusStudent
         console.log('Despues de cambiar: ', idStudent, !statusStudent)
         // actualizo el conteo
         reportaTotales()
